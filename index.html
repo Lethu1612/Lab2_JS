@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+   <script>
+                // lab2.1----------------------------------------------------------------------
+        // tạo mảng có key và value ;
+        let allarr = [
+          [10, "ghi bàn - đôi 1"],
+          [90, "ghi bàn - đôi 2"],
+          [34, "thay người - đội 2"],
+          [46, "nhận thẻ đỏ - đội 1"],
+          [64, "nhận thẻ vàng - đội 2"],
+        ];
+        
+        const tesst = [...new Set(allarr.map((all) => all[1]))];
+        console.log(`các sự kiện khác nhau là: ${tesst}`);
+        
+        allarr = allarr.filter(
+          (all) => !(all[0] === 64 && all[1] === "thẻ vàng - đội 2")
+        );
+        
+        let total = allarr.length
+        console.log(total);
+        let average = total/90;
+        console.log(`${Math.round(90/average)} phút`);
+        console.log(`${total} sự kiện xảy ra - trung bình mõi ${Math.round(90 / average)} phút`);
+        
+        console.log('danh sách sự kiện trong trận đấu -->');
+        allarr.forEach((all => {
+            let minute = all[0];
+            let names = all[1];
+            let action = minute <= 45 ? "hiệp 1" : "hiệp 2";
+            console.log(`${minute} : ${names} : ${action}`)
+        }))
+
+        // lab2.2---------------------------------------------------------------------
+        function send() {
+          let inputText = document.getElementById("inputText").value;
+          let xuongdong = inputText.split("\n");
+          let output = xuongdong.map((xd) => {
+            let pa = xd.split("_");
+            let camel = pa
+              .map((par, index) => {
+                if (index === 0) {
+                  return par;
+                } else {
+                  return par.charAt(0).toUpperCase() + par.slice(1);
+                }
+              })
+              .join("");
+            return camel;
+          });
+          let divoutput = document.getElementById("output");
+          divoutput.innerHTML = output
+            .map(
+              (word, index) =>
+                `${word} ${index + 1 <= word.length ? "🎆".repeat(index + 1) : ""}`
+            )
+            .join("<br>");
+        }
+        // lab2.3---------------------------------------------------------------------
+        const flights =
+        '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+        // 🔴 Delayed Departure from FAO to TXL (11h25)
+        // Arrival from BRU to FAO (11h45)
+        // 🔴 Delayed Arrival from HEL to FAO (12h05)
+        // Departure from FAO to LIS (12h30)
+        const getCode = str => str.slice(0, 3).toUpperCase();
+        for (const flight of flights.split('+')) {
+        const [type, from, to, time] = flight.split(';');
+        const output = `${type.startsWith('_Delayed') ? '🔴' : ''}${type.replaceAll(
+        '_',
+        ' '
+        )} ${getCode(from)} ${getCode(to)} (${time.replace(':', 'h')})`.padStart(36);
+        console.log(output);
+        }
+
+        // lab2.4---------------------------------------------------------------------
+        (function (){
+          const clickText = document.getElementById('clickText');
+          let blue = false;
+          clickText.style.color = 'red';
+          clickText.addEventListener("click", function() {
+            if(blue){
+            clickText.style.color= "red";
+          }else {
+            clickText.style.color= "blue";
+
+          }
+          blue = !blue;
+          })
+        }())
+   </script>
+</body>
+</html>
